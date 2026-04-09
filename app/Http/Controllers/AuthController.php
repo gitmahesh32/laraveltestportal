@@ -25,9 +25,8 @@ class AuthController extends Controller
                 'message' => 'OTP sent successfully',
                 'otp' => $otp // remove in production
             ]);
-
+ 
         }  catch (\Exception $e) {
-
             return response()->json([
                 'success' => false,
                 'message' => 'Something went wrong',
@@ -38,7 +37,6 @@ class AuthController extends Controller
 
     public function verifyOtp(Request $request) {
         try {
-
             $request->validate(
                 [ 'email' => 'required','otp'=> 'required']
             );
@@ -56,7 +54,7 @@ class AuthController extends Controller
                 'email'=>$request->email,
              ]);
 
-            if(!$user->hasAnyRole(['admin','recruiter','candidate'])){
+            if(!$user->hasAnyRole(['admin','recruiter','candidate','author'])){
                 $user->assignRole('candidate');
             }
 

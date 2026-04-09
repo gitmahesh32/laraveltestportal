@@ -5,16 +5,23 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
 Route::post('/send-otp',[AuthController::class,'sendOtp']);
 Route::post('/verify-otp',[AuthController::class,'verifyOtp']);
 
 Route::middleware(['auth:sanctum','role:admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class,'dashboard']);
-    });
-Route::resource('users',UserController::class);
+    
+    Route::apiResource('users',UserController::class);
+    
+    Route::patch('/users/{id}/toggle',[UserController::class,'toggle']);
+    
+    //category
+    Route::apiResource('category',CategoryController::class);
+    Route::patch('/category/{id}/toggle',[CategoryController::class,'toggle']);
+    Route::get('/parentCategory', [CategoryController::class,'parentDropdownCategory']);
+    
+});
 
