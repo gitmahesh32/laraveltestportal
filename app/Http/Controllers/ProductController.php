@@ -140,4 +140,6 @@ class ProductController extends Controller
         $pdt->save();
         return response()->json($pdt);
     }
+
+
 }

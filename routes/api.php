@@ -7,10 +7,13 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\FrontendController;
 
 
 Route::post('/send-otp',[AuthController::class,'sendOtp']);
 Route::post('/verify-otp',[AuthController::class,'verifyOtp']);
+Route::get('/menu',[FrontendController::class,'menu']);
+Route::get('/products', [FrontendController::class, 'productsByCatId']);
 
 Route::middleware(['auth:sanctum','role:admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class,'dashboard']);
